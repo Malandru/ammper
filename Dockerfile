@@ -1,5 +1,5 @@
 FROM python:3.11.7
-VOLUME /tmp
-COPY . /tmp
+COPY . .
+RUN pip install -r requirements.py
 
 ENTRYPOINT ["python", "manage.py", "runserver", "0.0.0.0"]

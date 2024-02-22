@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from aws.secret import SecretDatabase, SecretsManager
+from aws.secret import SecretDatabase, get_secrets_manager
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-secrets_manager = SecretsManager()
+secrets_manager = get_secrets_manager()
 secret_database: SecretDatabase = secrets_manager.get_secret_database()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-@d8^n$cx@sr2e_s^qdz1=1+rm((8dx*97w9&a2$@$dejzgbfnj'

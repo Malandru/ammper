@@ -4,6 +4,8 @@ from botocore.exceptions import ClientError
 from typing import List
 from aws.constants import *
 
+secrets_manager = None
+
 
 class SecretsManager:
     def __init__(self):
@@ -33,6 +35,9 @@ class SecretsManager:
     def get_allowed_hosts(self) -> List[str]:
         return self.split_field('allowed_hosts')
 
+    def get_secret_belvo_api(self):
+        return SecretBelvoAPI(self.secret)
+
 
 class SecretDatabase:
     def __init__(self, secret: dict):
@@ -41,3 +46,17 @@ class SecretDatabase:
         self.hostname = secret.get('hostname')
         self.port = secret.get('port')
         self.database = secret.get('database')
+
+
+class SecretBelvoAPI:
+    def __init__(self, secret: dict):
+        self.url = 'https://sandbox.belvo.com'
+        self.api_id = secret.get('belvo_id')
+        self.password = secret.get('belvo_password')
+
+
+def get_secrets_manager() -> SecretsManager:
+    global secrets_manager
+    if secrets_manager is None:
+        secrets_manager = SecretsManager()
+    return secrets_manager

@@ -1,4 +1,4 @@
-name: Build Ammper backend application with Maven and Docker
+name: Build Ammper Django with Docker
 
 on:
   workflow_dispatch:

@@ -3,3 +3,4 @@ django-cors-headers
 djangorestframework
 boto3
 psycopg2
+requests

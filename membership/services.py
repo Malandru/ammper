@@ -1,9 +1,9 @@
 from typing import Tuple
 from rest_framework.request import Request
 from rest_framework import status
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from membership.forms import RegisterForm
 
 
@@ -28,6 +28,11 @@ class MembershipService:
             return "user not authenticated", status.HTTP_401_UNAUTHORIZED
         login(request, user)
         return "welcome", status.HTTP_200_OK
+
+    @staticmethod
+    def drop_session(request: Request):
+        logout(request)
+        return "good bye", status.HTTP_200_OK
 
     @staticmethod
     def welcome():

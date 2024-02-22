@@ -24,6 +24,15 @@ class UserLogin(APIView):
         return Response(msg, status)
 
 
+class UserLogout(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    authentication_classes = (SessionAuthentication, )
+
+    def get(self, request: Request):
+        msg, status = MembershipService.drop_session(request)
+        return Response(msg, status)
+
+
 class UserWelcome(APIView):
     permission_classes = (permissions.IsAuthenticated, )
     authentication_classes = (SessionAuthentication, )

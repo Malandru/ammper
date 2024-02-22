@@ -14,3 +14,21 @@ class BankInstitutions(APIView):
     def get(self, request: Request):
         msg, status = BankingService.list_institutions(request)
         return Response(msg, status)
+
+
+class BankAccounts(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    authentication_classes = (SessionAuthentication, )
+
+    def post(self, request: Request):
+        msg, status = BankingService.list_accounts(request)
+        return Response(msg, status)
+
+
+class AccountTransactions(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    authentication_classes = (SessionAuthentication, )
+
+    def post(self, request: Request):
+        msg, status = BankingService.list_transactions(request)
+        return Response(msg, status)

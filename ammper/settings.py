@@ -26,7 +26,7 @@ secret_database: SecretDatabase = secrets_manager.get_secret_database()
 SECRET_KEY = 'django-insecure-@d8^n$cx@sr2e_s^qdz1=1+rm((8dx*97w9&a2$@$dejzgbfnj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = secrets_manager.get_allowed_hosts()
 

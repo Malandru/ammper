@@ -33,11 +33,6 @@ ALLOWED_HOSTS = secrets_manager.get_allowed_hosts()
 CORS_ALLOWED_ORIGINS = secrets_manager.get_allowed_origins()
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = secrets_manager.get_allowed_origins()
-SESSION_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'None'
-CSRF_COOKIE_SECURE = True
-
 
 # Application definition
 

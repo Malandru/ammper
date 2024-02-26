@@ -32,6 +32,7 @@ ALLOWED_HOSTS = secrets_manager.get_allowed_hosts()
 
 CORS_ALLOWED_ORIGINS = secrets_manager.get_allowed_origins()
 CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = secrets_manager.get_allowed_origins()
 
 
 # Application definition

@@ -1,4 +1,5 @@
 import requests
+import exrex
 from typing import List, Iterable
 from aws.secret import get_secrets_manager
 from api.belvo.endpoints import Endpoint
@@ -7,8 +8,6 @@ from api.belvo.parser import *
 secret_belvo_api = get_secrets_manager().get_secret_belvo_api()
 belvo_api = None
 
-API_USERNAME = 'banking100'
-API_PASSWORD = 'empty'
 API_TOKEN = 'abc12345'
 
 
@@ -25,19 +24,21 @@ class BelvoAPI:
             link = dict_to_link(result)
             if bank.name == link.institution:
                 return link
-        # link not found in registered links, so register a link
-        url = get_url(Endpoint.REGISTER_LINK)
         body = dict(
             institution=bank.name,
-            username=API_USERNAME,
-            password=API_PASSWORD,
             external_id='security-testing',
             access_mode='single',
             credentials_storage='5d',
             stale_in='30d',
-            fetch_resources=["ACCOUNTS", "OWNERS", "TRANSACTIONS"],
-            code=API_TOKEN,
+            fetch_resources=bank.resources,
         )
+        for form_field in bank.form_fields:
+            key = exrex.getone(form_field.name)
+            value = exrex.getone(form_field.validation)
+            extra_body = {key: value}
+            body = {**body, **extra_body}
+        # link not found in registered links, so register a link
+        url = get_url(Endpoint.REGISTER_LINK)
         response = self.session.post(url, json=body).json()
         return dict_to_link(response)
 

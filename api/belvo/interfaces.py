@@ -1,9 +1,20 @@
+from typing import List
+
+
+class FormField:
+    def __init__(self, name, validation):
+        self.name = name
+        self.validation = validation
+
+
 class Bank:
-    def __init__(self, bank_id, name, display_name, link_id):
+    def __init__(self, bank_id, name, display_name, link_id, form_fields: List['FormField'], resources: List[str]):
         self.bank_id = bank_id
         self.name = name
         self.display_name = display_name
         self.link_id = link_id
+        self.form_fields = form_fields
+        self.resources = resources
 
 
 class Link:

@@ -1,22 +1,43 @@
-from api.belvo.interfaces import Bank, Link, Account, Transaction, TransactionBalance
+from api.belvo.interfaces import Bank, Link, Account, Transaction, TransactionBalance, FormField
 from typing import Dict
 
 
+def form_field_to_dict(form_field: FormField):
+    return dict(
+        name=form_field.name,
+        validation=form_field.validation,
+    )
+
+
+def dict_to_form_field(body: Dict):
+    return FormField(
+        name=body.get('name'),
+        validation=body.get('validation')
+    )
+
+
 def bank_to_dict(bank: Bank):
+    form_fields = map(form_field_to_dict, bank.form_fields)
     return dict(
         bank_id=bank.bank_id,
         name=bank.name,
         display_name=bank.display_name,
         link_id=bank.link_id,
+        form_fields=form_fields,
+        resources=bank.resources,
     )
 
 
 def dict_to_bank(body: Dict) -> Bank:
+    bank_id = body.get('id')
+    form_fields = map(dict_to_form_field, body.get('form_fields'))
     return Bank(
-        bank_id=body.get('id'),
+        bank_id=bank_id if bank_id else body.get('bank_id'),
         name=body.get('name'),
         display_name=body.get('display_name'),
-        link_id=body.get('link_id', None)
+        link_id=body.get('link_id', None),
+        form_fields=list(form_fields),
+        resources=body.get('resources', [])
     )
 
 
